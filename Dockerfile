@@ -1,4 +1,4 @@
-FROM python:3.11-slim
+FROM python:3.12-slim
 
 # Evitar que Python genere archivos .pyc y permitir logs en tiempo real
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -14,7 +14,8 @@ RUN apt-get update && apt-get install -y \
 
 # Instalar dependencias de Python
 COPY requirements.txt /app/
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
 
 # Copiar el proyecto
 COPY . /app/
