@@ -5,10 +5,10 @@ class ReportesPDFStorage(AzureStorage):
     account_name = os.getenv('AZURE_ACCOUNT_NAME')
     account_key = os.getenv('AZURE_ACCOUNT_KEY')
     azure_container = 'reportes-pdf'
-    expiration_secs = None
+    expiration_secs = 3600  # 1 hora
 
 class ImagenesMedicasStorage(AzureStorage):
     account_name = os.getenv('AZURE_ACCOUNT_NAME')
     account_key = os.getenv('AZURE_ACCOUNT_KEY')
     azure_container = 'imagenes-medicas'
-    expiration_secs = None
+    expiration_secs = 3600  # 1 hora
