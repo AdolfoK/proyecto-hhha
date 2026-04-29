@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="mb-4 d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-center gap-3">
+        <a href="{% url 'detalle_paciente' examen.paciente.id %}" class="btn btn-light rounded-pill border shadow-sm px-3 d-flex align-items-center">
+            <i class="bi bi-arrow-left me-2"></i> Volver
+        </a>
+        <nav aria-label="breadcrumb" class="d-none d-md-block">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="{% url 'dashboard' %}" class="text-decoration-none">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'detalle_paciente' examen.paciente.id %}" class="text-decoration-none">Expediente</a></li>
+                <li class="breadcrumb-item active">Visualizador</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="d-flex gap-2">
+        <button onclick="window.print()" class="btn btn-sm btn-outline-primary rounded-pill px-3 shadow-sm">
+            <i class="bi bi-printer me-1"></i> Imprimir
+        </button>
+        <a href="{{ url }}" download class="btn btn-sm btn-primary rounded-pill px-3 shadow-sm">
+            <i class="bi bi-download me-1"></i> Descargar
+        </a>
+    </div>
+</div>
+
+<div class="card border-0 shadow-lg overflow-hidden">
+    <div class="card-header bg-dark text-white py-3 border-0 d-flex justify-content-between align-items-center">
+        <h6 class="mb-0 fw-bold">
+            {% if tipo == 'pdf' %}
+                <i class="bi bi-file-earmark-pdf-fill text-danger me-2"></i> Reporte: {{ examen.paciente.nombre }}
+            {% else %}
+                <i class="bi bi-image-fill text-info me-2"></i> Imagen: {{ examen.paciente.nombre }}
+            {% endif %}
+        </h6>
+    </div>
+    <div class="card-body p-0" id="printArea" style="height: 75vh; background-color: #334155;">
+        {% if tipo == 'pdf' %}
+            <iframe src="{{ url }}" width="100%" height="100%" style="border: none;"></iframe>
+        {% else %}
+            <div class="d-flex align-items-center justify-content-center h-100">
+                <img src="{{ url }}" id="medicalImage" class="img-fluid shadow-lg" style="max-height: 95%; object-fit: contain; border-radius: 4px;" alt="Imagen Médica">
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="mt-4 text-center">
+    <div class="d-inline-flex align-items-center bg-white px-4 py-2 rounded-pill shadow-sm border">
+        <i class="bi bi-shield-lock-fill text-success me-2"></i>
+        <small class="text-muted fw-medium">Documento cifrado y verificado por el sistema central del Hospital Dr. HHHA</small>
+    </div>
+</div>
+
+<style>
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+        #printArea, #printArea * {
+            visibility: visible;
+        }
+        #printArea {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white !important;
+        }
+    }
+    .breadcrumb-item + .breadcrumb-item::before {
+        content: "›";
+    }
+</style>
+{% endblock %}

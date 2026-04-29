@@ -1,0 +1,7 @@
+Django>=6.0.4
+django-storages[azure]>=1.14.4
+azure-storage-blob>=12.19.0
+psycopg2-binary>=2.9.9
+gunicorn>=21.2.0
+Pillow>=10.2.0
+python-dotenv>=1.0.1
